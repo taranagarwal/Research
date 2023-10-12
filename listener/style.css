@@ -1,0 +1,79 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('https://png.pngtree.com/background/20220725/original/pngtree-sound-wave-for-web-site-picture-image_1778547.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app {
+  width: 50%; /* Adjust the width as needed */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+}
+
+.app-header {
+  color: #6200ea;
+}
+
+.app-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.record-btn {
+  padding: 10px 25px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #6200ea;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.record-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.record-btn:not(:disabled):hover {
+  background-color: #3700b3;
+}
+
+.audio-wrapper {
+  width: 100%;
+  max-width: 300px;
+}
+
+audio {
+  width: 100%;
+}
+
+.download-link {
+  display: block;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #6200ea;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.download-link:hover {
+  background-color: #3700b3;
+}
