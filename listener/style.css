@@ -77,3 +77,17 @@ audio {
 .download-link:hover {
   background-color: #3700b3;
 }
+
+.transcripts {
+  width: 100%;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.transcript-item {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
