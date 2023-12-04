@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  endpoint = "https://speech.googleapis.com";
   const startButton = document.getElementById('startBtn');
   const stopButton = document.getElementById('stopBtn');
   const audioElement = document.getElementById('audio');

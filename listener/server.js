@@ -1,36 +1,44 @@
-const speech = require('@google-cloud/speech');
-const client = new speech.SpeechClient({ keyFilename: 'path-to-your-credentials-file.json' });
+// Import the Cloud Speech-to-Text library
+import { v2 as speech } from '@google-cloud/speech';
 
-async function transcribeAudio(audioBuffer) {
-  const audio = { content: audioBuffer.toString('base64') };
-  const config = {
-    encoding: 'LINEAR16', // update this based on audio format
-    sampleRateHertz: 16000, // update this based on audio format
-    languageCode: 'en-US',
-    enableWordTimeOffsets: true, // important to get word timestamps
+// Instantiates a client
+const client = new speech.SpeechClient();
+
+// Your local audio file to transcribe
+const audioFilePath = "gs://test_bucket_taran/audio-files/recorded_audio_2 (1).webm";
+// Full recognizer resource name
+const recognizerName = "projects/lively-epsilon-406718/locations/us/recognizers/_";
+// The output path of the transcription result.
+const workspace = "gs://test_bucket_taran/transcripts";
+
+const recognitionConfig = {
+  autoDecodingConfig: {},
+  model: "short",
+  languageCodes: ["en-US"],
+  features: {
+  enableWordTimeOffsets: true,
+  enable_word_confidence: true,
+  },
+};
+
+const audioFiles = [
+  { uri: audioFilePath }
+];
+const outputPath = {
+  gcsOutputConfig: {
+    uri: workspace
+  }
+};
+
+async function transcribeSpeech() {
+  const transcriptionRequest = {
+    recognizer: recognizerName,
+    config: recognitionConfig,
+    files: audioFiles,
+    recognitionOutputConfig: outputPath,
   };
 
-  const request = {
-    audio: audio,
-    config: config,
-  };
-
-  const [response] = await client.recognize(request);
-  const transcription = response.results
-    .map(result => result.alternatives[0])
-    .map(alternative => {
-      const firstWord = alternative.words[0];
-      const lastWord = alternative.words[alternative.words.length - 1];
-      const startTime = firstWord.startTime.seconds + firstWord.startTime.nanos * 1e-9;
-      const endTime = lastWord.endTime.seconds + lastWord.endTime.nanos * 1e-9;
-      const duration = endTime - startTime;
-      const wordsPerSecond = alternative.words.length / duration;
-
-      return {
-        transcript: alternative.transcript,
-        wordsPerSecond: wordsPerSecond,
-      };
-    });
-
-  return transcription;
+  await client.batchRecognize(transcriptionRequest);
 }
+
+transcribeSpeech();
